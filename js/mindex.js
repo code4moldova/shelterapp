@@ -157,7 +157,7 @@ var buas = [],lev2s = [],locations_names=[],operators=[];
 
 initiateLocations();
 function initiateLocations(){
-  overlay.setPosition(undefined);
+  //overlay.setPosition(undefined);
   /*$.ajax({
     url: conf.link+'public/',
     type: "GET",
