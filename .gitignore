@@ -1,2 +1,3 @@
 *.sh
 /cgi-bin
+.htaccess
