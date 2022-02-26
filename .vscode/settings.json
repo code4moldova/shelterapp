@@ -1,0 +1,9 @@
+{
+	"editor.renderWhitespace": "all",
+	"editor.guides.indentation": true,
+	"typescript.tsdk": "./node_modules/typescript/lib",
+	"[javascript][javascriptreact][typescript][typescriptreact][vue][json][jsonc][html]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
+}
