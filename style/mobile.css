@@ -1,0 +1,387 @@
+#helpInfoModal .tablist li{
+    width: fit-content !important;
+}
+.btn-blue{
+    color: #ffd500 !important;
+    background-color: #2353d9 !important;
+    border-color: #2353d9 !important;
+}
+.btn-yellow{
+    color: #2353d9 !important;
+    background-color: #ffd500 !important;
+    border-color: #ffd500 !important;
+}
+#help-offer, #help-seek{
+    font-size: 30px;
+}
+#addHelp{
+    z-index: 100;
+    color: #ffd500 !important;
+}
+.add-help{
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    z-index: 100;
+}
+#help-tutorial{
+    display: none;
+    position: absolute;
+    width: 300px;
+    padding-right: 55px;
+    height: 53px;
+    right: 1px;
+}
+/*.nav-pills .nav-link{
+    background-color: #2962ff !important;
+    color: white !important;
+}
+.nav-pills .nav-link.active{
+    background-color: white !important; 
+    color: #2962ff !important;
+}*/
+#map{
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    border-radius: .10rem;
+}
+.map {
+    width: 100%;
+    height: 85vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+#map-pin{
+    display: none;
+    position: fixed;
+    pointer-events: none;
+    -webkit-filter: drop-shadow(2px -4px 2px#666666);
+    filter: drop-shadow(2px -4px 2px#666666);
+    top: calc(50vh + 8px);
+    left: calc(50% - 20px);
+    width: 40px;
+}
+.search-items{
+    cursor: pointer;
+}
+.map-attributions{
+    position: absolute;
+    pointer-events: auto;
+    bottom: 0;
+    right: 0;
+    color: #000;
+    font-size: 12px;
+    padding: 0px 4px;
+    width: fit-content;
+    border-radius: 4px 0 0;
+    background: rgba(255,255,255,.8);
+}
+
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    pointer-events: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    border-radius: .3rem;
+    bottom: 12px;
+    left: -50px;
+    bottom: 24px;
+    min-width: 200px;
+}
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+.ol-popup-closer {
+    color: #fff !important;
+    pointer-events: auto;
+    text-decoration: none;
+    position: absolute;
+    top: 3px;
+    right: 8px;
+}
+.ol-popup-closer:after {
+    pointer-events: auto;
+    content: "✖";
+}
+#hov-popup{
+    box-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+    bottom: 26px;
+}
+.popover{
+    width: 170px; /* Max Width of the popover (depending on the container!) */
+}
+.popover-body{
+    padding: .5rem .5rem !important;
+}
+.popover-header{
+    padding: .5rem .5rem !important;
+}
+.tt-cursor{
+    color: #fff;
+    text-decoration: none;
+    background-color: #7460ee;
+}
+.map-tooltip {
+    position: relative;
+    background: #2962ff;
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+.map-tooltip-measure {
+    opacity: 1;
+    font-weight: bold;
+}
+
+.map-tooltip-static {
+    font-weight: bold;
+    background-color: #2962ff;
+    color: white;
+    border: 1px solid white;
+}
+
+.map-tooltip-measure:before, .map-tooltip-static:before {
+    border-top: 6px solid #2962ff;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    margin-left: -7px;
+    left: 50%;
+}
+
+.map-tooltip-static:before {
+    border-top-color: #2962ff;
+}
+.map-manage{
+    height: fit-content;
+    position: absolute;
+    top: 10px;
+    right: 10px; 
+}
+.mnbtn{
+    padding-top: 2px;
+    border: transparent;
+    border: 1px solid #2962ff;
+    border-radius: 4px;
+    color: #2962ff;
+    background-color: #fff !important;
+    outline: none;
+    cursor: pointer;
+}
+.mapbtn {
+    border: transparent;
+    border: 1px solid #2962ff;
+    border-radius: 4px;
+    color: #2962ff;
+    margin-bottom: 5px;
+    background-color: #fff !important;
+    outline: none;
+    cursor: pointer;
+}
+.mapbtn:focus{
+    outline:none;
+    box-shadow: none;
+}
+.mapbtn:hover , .mnbtn:hover{
+    background-color: #2962ff !important;
+    color: white !important;
+}
+.mapbtn.active{
+    background-color: #2962ff !important;
+    color: white !important;
+}
+/* Basemap style */
+.basemap-list{
+    display: none;
+    position:absolute;
+    font-size: small;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    border-radius: .3rem;
+    border: 1px solid #2962ff;   
+}
+.map .basemap-list{
+    left: 43px;
+    top: calc(40% + 11.7rem);
+}
+/* Legend Style */
+.legend-list{
+    display: none;
+    position:absolute;
+    font-size: small;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    border-radius: .3rem;
+    border: 1px solid #2962ff;   
+}
+.map .legend-list{
+    left: 43px;
+    top: calc(40% + 13.7rem);
+}
+/* Function button's style */
+.btn-groupe {
+    width: 30px;
+    position: absolute;
+    left: 10px;
+}
+.btn-groupe{
+    top: 40%;
+}
+/* Measure button's style */
+.distance-btn , .area-btn{
+    display: none;
+    width: auto;
+    position: absolute;
+    left: 43px;
+}
+.map .distance-btn{top: calc(40% + 7.7rem)}
+.map .area-btn{top: calc(40% + 9.7rem)}
+
+.select2-container{
+    z-index: 1100 !important;
+}
+#filterDiv .select2-selection--multiple, #helpInfoModal .select2-selection--multiple{
+    height: auto !important;
+}
+.form-check-input.dark:checked{
+    background-color: black!important;
+    border-color: black!important;
+}
+.form-check-input.check-outline.outline-dark{
+    border: 1px solid black;
+    background-color: transparent;
+}
+.form-check-input.glass:checked{
+    background-color: #008036!important;
+    border-color: #008036!important;
+}
+.form-check-input.check-outline.outline-glass{
+    border: 1px solid #008036;
+    background-color: transparent;
+}
+.form-check-input.plastic:checked{
+    background-color: #ffdf58!important;
+    border-color: #ffdf58!important;
+}
+.form-check-input.check-outline.outline-plastic{
+   border: 1px solid #ffdf58;
+   background-color: transparent;
+}
+
+#filterDiv{
+    position: absolute;
+    height: fit-content;
+    background: #fff;
+    box-shadow: 0px 0px 5px #666;
+    z-index: 4;
+    max-width: 1200px;
+}
+#hide-filter{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+.select2-container{
+    min-width: 100px;
+}
+#filterDiv .badge{
+    cursor: default;
+}
+.bg-sac{background-color: #ff6c4e !important;}
+.bg-sag{background-color:#fed227 !important;}
+.bg-mixt{background-color:#2bc376 !important;}
+.bg-unknown{background-color:#425172 !important;}
+.c-sac{color: #ff6c4e !important;}
+.c-sag{color: #fed227 !important;}
+.c-mixt{color:#2bc376 !important;}
+.form-check-input.sac:checked{
+    background-color: #ff6c4e !important;
+    border-color: #ff6c4e !important;
+}
+.form-check-input.check-outline.outline-sac{
+    border: 1px solid #ff6c4e;
+    background-color: transparent;
+}
+.form-check-input.sag:checked{
+    background-color:#fed227 !important;
+    border-color: #fed227 !important;
+}
+.form-check-input.check-outline.outline-sag{
+    border: 1px solid #fed227;
+    background-color: transparent;
+}
+.form-check-input.mixt:checked{
+    background-color:#2bc376 !important;
+    border-color: #2bc376 !important;
+}
+.form-check-input.check-outline.outline-mixt{
+    border: 1px solid #2bc376;
+    background-color: transparent;
+}
+.form-check-input.unknown:checked{
+    background-color:#425172 !important;
+    border-color: #425172 !important;
+}
+.form-check-input.check-outline.outline-unknown{
+    border: 1px solid #425172;
+    background-color: transparent;
+}
+
+.slider-sac .noUi-connect{
+    background: #ff6c4e !important;
+}
+.slider-sac .noUi-handle{
+    border-color: #ff6c4e !important;
+}
+.slider-sag .noUi-connect{
+    background: #fed227 !important
+}
+.slider-sag .noUi-handle{
+    border-color: #fed227 !important
+}
+.noUi-horizontal .noUi-handle-lower .noUi-tooltip {
+  top: 15px;
+  bottom: initial;
+}
+
+.noUi-tooltip{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.slider-header{
+    position: absolute;
+    top: -16px;
+    left: 0;
+    right: 0;
+}

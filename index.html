@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="">
+    <title>Допомога Молдова – Україна</title>
+    <script type="text/javascript">
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        window.location.href = './mindex.html';
+      };
+    </script>
+    <link rel="icon" type="image/png" href="./assets/images/help1.png">
+    <!-- Favicon icon -->
+    <link href="./assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+    <link href="./assets/libs/nouislider/distribute/nouislider.min.css" rel="stylesheet" />
+    <link href="./assets/extra-libs/nouislider/palette-noui.css" rel="stylesheet" />
+    <link href="./assets/extra-libs/nouislider/noui-slider.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="./assets/libs/select2/dist/css/select2.min.css"/>
+    <link href="./style/map.css" rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <link href="./dist/css/style.min.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- -------------------------------------------------------------- -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- -------------------------------------------------------------- -->
+    <div id="main-wrapper">
+      <!-- -------------------------------------------------------------- -->
+      <!-- Topbar header - style you can find in pages.scss -->
+      <!-- -------------------------------------------------------------- -->
+      <header class="topbar">
+        <nav class="navbar top-navbar navbar-expand-lg navbar-dark">
+          <div class="navbar-header justify-content-center">
+            <!-- -------------------------------------------------------------- -->
+            <!-- Logo -->
+            <!-- -------------------------------------------------------------- -->
+             <a class="navbar-brand ms-auto me-auto" href="https://www.anre.md/">
+              <!-- Logo icon -->
+              <b class="logo-icon d-flex justify-content-center">
+                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                <!-- Dark Logo icon -->
+                <img src="./assets/images/help.png" alt="homepage" class="light-logo" width="50px"/>
+              </b>
+              <!--End Logo icon -->
+              <!-- Logo text -->
+              <span class="ms-1 logo-text d-flex justify-content-center">   
+                <h3 class="text-light fs-5 mb-0">Допомога Молдова – Україна</h3>          
+                <!-- <img src="./assets/images/anre-text.png" alt="homepage" class="light-logo" /> -->
+              </span>
+            </a>
+            
+            <!-- -------------------------------------------------------------- -->
+            <!-- End Logo -->
+            <!-- -------------------------------------------------------------- -->
+            <!-- -------------------------------------------------------------- -->
+            <!-- Toggle which is visible on mobile only -->
+            <!-- -------------------------------------------------------------- -->
+            <a
+              class="topbartoggler d-block d-lg-none waves-effect waves-light"
+              href="javascript:void(0)"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+              ><i class="ri-more-line fs-6"></i
+            ></a>
+          </div>
+          <!-- -------------------------------------------------------------- -->
+          <!-- End Logo -->
+          <!-- -------------------------------------------------------------- -->
+          <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-2 me-auto">
+              <li class="nav-item dropdown mega-dropdown d-flex flex-row">
+                <a href="javascript:void(0)" id="btn-show-filter" title="Filtrare stații" class="btn btn-info text-light border-light me-1">
+                  <i data-feather="filter" class="feather-sm fill-white"> </i>
+                </a>
+                <a href="javascript:void(0)" id="btn-cancel-filter" title="Anulează filtrarea" class="btn hide btn-danger">
+                  <i data-feather="x" class="feather-sm fill-white"></i>
+                </a>
+              </li>
+            </ul>
+            <!-- <ul class="navbar-nav ms-auto">
+              <li class="nav-item dropdown">
+                <div class="nav-link text-center text-light">
+                    <h6 class="mb-0"></h6>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <div class="nav-link">
+                  <div class="me-2">
+                    <span class="round rounded d-flex justify-content-center align-items-center bg-sac"><h4 class="mb-0">B</h4></span>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0 text-light"></h6>
+                    <span class="text-white badge bg-sac">Benzină 95</span>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <div class="info nav-link align-items-center">
+                  <div class="me-2">
+                    <span class="round rounded d-flex justify-content-center align-items-center bg-sac"><h4 class="mb-0">M</h4></span>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0 text-light"></h6>
+                    <span class="text-white badge bg-sac">Motorină</span>
+                  </div>
+                </div>
+              </li>
+            </ul> -->
+          </div>
+        </nav>
+      </header>
+
+      <!-- -------------------------------------------------------------- -->
+      <!-- End Topbar header -->
+      <!-- -------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------- -->
+      <!-- Page wrapper  -->
+      <!-- -------------------------------------------------------------- -->
+      <div class="page-wrapper" style="height:fit-content;min-height: calc(100vh - 64px);">
+        <!-- -------------------------------------------------------------- -->
+        <!-- Container fluid  -->
+        <!-- -------------------------------------------------------------- -->
+        <!-- START Filter  -->
+        <div id="filterDiv" class="rounded hide" tabindex="-1">
+          <div class="card mb-0">
+            <a href="javascript:void(0)" id="hide-filter" class="text-dark">
+              <i data-feather="x" class="feather-sm"> </i>
+            </a> 
+            <div class="card-body pb-0">
+              <div class="row d-flex flex-row justify-content-around">
+                <div class="row col-lg-4 mb-2">
+                  <div class="col-12 mb-2">
+                    <h6 class="text-center">Raion</h6>
+                    <div class="d-flex flex-row align-items-center">
+                      <select id="raion-filter" 
+                        multiple="multiple" 
+                        style="width: 100%" 
+                        class="select2">
+                      </select>
+                      <a href="javascript:void(0)" id="btn-cancel-filter-raion" class="ms-1 btn btn-danger">
+                        <i data-feather="x" class="feather-sm fill-white"> </i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <h6 class="text-center">Localitate</h6>
+                    <div class="d-flex flex-row align-items-center">
+                      <select id="localitate-filter" 
+                        multiple="multiple" 
+                        style="width: 100%" 
+                        class="select2">
+                      </select>
+                      <a href="javascript:void(0)" id="btn-cancel-filter-localitate" class="ms-1 btn btn-danger">
+                        <i data-feather="x" class="feather-sm fill-white"> </i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row col-lg-4 mb-2">
+                  <div class="col-12 mb-2">
+                    <h6 class="text-center">Denumire</h6>
+                    <div class="d-flex flex-row align-items-center">
+                      <select id="denumire-filter" 
+                        multiple="multiple"
+                        style="width: 100%"  
+                        class="select2">
+                      </select>
+                      <a href="javascript:void(0)" id="btn-cancel-filter-denumire" class="ms-1 btn btn-danger">
+                        <i data-feather="x" class="feather-sm fill-white"> </i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <h6 class="text-center">Operator</h6>
+                    <div class="d-flex flex-row align-items-center">
+                      <select id="operators-filter" 
+                        multiple="multiple"
+                        style="width: 100%" 
+                        class="select2">
+                      </select>
+                      <a href="javascript:void(0)" id="btn-cancel-filter-operator" class="ms-1 btn btn-danger">
+                        <i data-feather="x" class="feather-sm fill-white"> </i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row col-lg-2 mb-2">
+                  <div class="col-12">
+                    <h6 class="text-center">Tipul stației</h6>
+                    <div class="ms-2">
+                      <div class="form-check">
+                        <input class="form-check-input sac check-outline outline-sac" type="checkbox" value="1">
+                        <span class="ms-2 badge bg-sac text-light fw-normal" title="Stație de alimentare cu combustibil">SAC</span>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input sag check-outline outline-sag" type="checkbox" value="2">
+                        <span class="ms-2 badge bg-sag text-light fw-normal" title="Stație de alimentare cu gaze">SAG</span>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input mixt check-outline outline-mixt" type="checkbox" value="3">
+                        <span class="ms-2 badge bg-mixt text-light fw-normal">Mixtă</span>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input unknown check-outline outline-unknown" type="checkbox" value="0">
+                        <span class="ms-2 badge bg-unknown text-light fw-normal">Necunoscut</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row col-lg-2 mb-2">
+                  <div class="col-12 mb-2">
+                    <div id="benzina-price-filter" class="slider-xs slider-sac noUi-target noUi-ltr d-flex justify-content-center noUi-horizontal mt-5 mb-0">
+                      <h6 class="slider-header text-center">Benzină 95</h6>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <div id="motorina-price-filter" class="slider-xs slider-sac noUi-target noUi-ltr noUi-horizonta mt-5 mb-0">
+                      <h6 class="slider-header text-center">Motorină</h6>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <div id="gas-price-filter" class="slider-xs slider-sag noUi-target noUi-ltr noUi-horizontal mt-5 mb-0">
+                      <h6 class="slider-header text-center">Gaz</h6>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+              <button type="button" id="btn-filter" class="btn btn-outline-info me-1">
+                <i data-feather="filter" class="feather-sm fill-white"> </i> Filtrează
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- END Filter --> 
+        <!-- ---------------------------------------------------------------- -->
+        <div class="container-fluid">
+          <!-- -------------------------------------------------------------- -->
+          <!-- Start Page Content -->
+          <!-- -------------------------------------------------------------- -->
+           
+          <div class="row">
+            <div id="left-part" class="col-lg-7">
+              <div class="widget-content searchable-container list">
+                <div class="card card-body adj-card">
+                  <div class="table-responsive">
+                    <table id="locations-table" style="width:100%" class="table display search-table v-middle text-nowrap">
+                      <thead class="header-item">
+                        <tr>
+                          <th></th>
+                          <th>...</th>
+                          <th class="text-center">...</th>
+                          <th class="text-center">...</th>
+                          <th class="text-center">...</th>
+                          <th class="text-center">...</th>
+                          <th class="text-center">...</th>
+                          <th class="text-center"></th>
+                          <th class="d-none"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="right-part" class="col-lg-5">
+              <div class="card">
+                <div class="card-body adj-card">
+                  <div class="map">
+                    <div id="map"></div>
+                    <div id="hov-popup" class="ol-popup">
+                      <div class="d-flex flex-column text-center" id="hov-content">
+                      </div>
+                    </div>
+                    <div id="popup" class="ol-popup">
+                      <div class="card mb-0">
+                        <div class="card-header ps-2 pe-4 py-1">
+                          <div class="popup-header"></div>
+                          <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                        </div>
+                        <div class="card-body p-2">
+                          <div class='row'>
+                            <div class='col-12 p-0 d-flex justify-content-center'>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="map-manage">
+                      <button class="mnbtn" title="Extinde harta"><i class="fas fa-expand"></i></button>
+                    </div>
+                    <div class="btn-groupe">
+                      <button class="mapbtn" onclick="zoomIn(map)" title="Apropie"><i class="mdi mdi-plus"></i></button>
+                      <button class="mapbtn" onclick="zoomOut(map)" title="Îndepărtează"><i class="mdi mdi-minus"></i></button>
+                      <button class="mapbtn" onclick="homeButton(map)" title="Vizualizarea de bază"><i class="mdi mdi-home"></i></button>
+                      <button class="mapbtn" onclick="locateMe(map)" title="Locația mea"><i class="mdi mdi-crosshairs-gps"></i></button>
+                      <button class="mapbtn" onclick="lengthMeasure()" title="Măsoară distanța"><i class="mdi mdi-ruler"></i></button>
+                      <button class="mapbtn" onclick="areaMeasure()" title="Măsoară suprafața"><i class="mdi mdi-vector-polygon"></i></button>
+                      <button class="mapbtn" title="Hărți"><i class="mdi mdi-layers"></i></button>
+                      <button class="mapbtn" title="Legenda"><i class="mdi mdi-view-list"></i></button>
+                    </div>
+                    <div class="distance-btn">
+                      <button onclick="addMeasure('LineString','m',map,0);" class="mapbtn d-inline" title="Metri">m</button>
+                      <button onclick="addMeasure('LineString','km',map,0);" class="mapbtn d-inline" title="Kilometri">km</button>
+                    </div>
+                    <div class="area-btn">
+                      <button type="button" onclick="addMeasure('Polygon','a',map,0);" class="mapbtn d-inline" title="Ari">Ar</button>
+                      <button type="button" onclick="addMeasure('Polygon','ha',map,0);" class="mapbtn d-inline" title="Hectare">ha</button>
+                      <button type="button" onclick="addMeasure('Polygon','mm',map,0);" class="mapbtn d-inline" title="m²">m²</button>
+                      <button type="button" onclick="addMeasure('Polygon','kmm',map,0);" class="mapbtn d-inline" title="km²">km²</button>
+                    </div>
+                    <div class="basemap-list">
+                      <!-- <fieldset>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" name="firstRadio" checked>
+                          <label class="custom-control-label">CartoDB</label>
+                        </div>
+                      </fieldset> -->
+                      <fieldset>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" name="firstRadio"  checked>
+                          <label class="custom-control-label">OSM</label>
+                        </div>
+                      </fieldset>
+                      <fieldset>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" name="firstRadio">
+                          <label class="custom-control-label">Satellite</label>
+                        </div>
+                      </fieldset>
+                      <fieldset>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" name="firstRadio" >
+                          <label class="custom-control-label">Ortofoto 2016/2020</label>
+                        </div>
+                      </fieldset>
+                      <fieldset>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" name="firstRadio">
+                          <label class="custom-control-label">Ortofoto 2007</label>
+                        </div>
+                      </fieldset>                                  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- -------------------------------------------------------------- -->
+          <!-- End PAge Content -->
+          <!-- -------------------------------------------------------------- -->
+        </div>
+        <!-- -------------------------------------------------------------- -->
+        <!-- End Container fluid  -->
+      </div>
+      <!-- -------------------------------------------------------------- -->
+      <!-- End Page wrapper  -->
+      <!-- -------------------------------------------------------------- -->
+    </div>
+    <!-- -------------------------------------------------------------- -->
+    <!-- End Wrapper -->
+    <!-- -------------------------------------------------------------- -->
+    <!-- -------------------------------------------------------------- -->
+   
+    <div class="chat-windows"></div>
+    <!-- -------------------------------------------------------------- -->
+    <!-- Required Js files -->
+    <!-- -------------------------------------------------------------- -->
+    <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Theme Required Js -->
+    <script src="./dist/js/app.min.js"></script>
+    <script src="./dist/js/app.init.horizontal-fullwidth.js"></script>
+    <!-- perfect scrollbar JavaScript -->
+    <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="./dist/js/feather.min.js"></script>
+    <script src="./dist/js/custom.min.js"></script>
+    <!-- --------------------------------------------------------------- -->
+    <!-- This page JavaScript -->
+    <!-- --------------------------------------------------------------- -->
+    <script src="./assets/libs/nouislider/distribute/nouislider.min.js"></script>
+    <script src="./assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="./assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"></script>
+    <link   rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/css/ol.css">
+    <script type="text/javascript" src="./js/config.js"></script>
+    <script type="text/javascript" src="./js/options.js"></script>
+    <link   rel="stylesheet" href="./js/ol-ext.css" />
+    <script type="text/javascript" src="./js/ol-ext.js"></script>
+    <script src="./js/proj4.js"></script>
+    <script src="./js/measure.js"></script>
+    <script src="./js/map.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
