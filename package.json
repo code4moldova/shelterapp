@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"prepare": "husky install"
 	},
 	"dependencies": {
 		"vue": "^3.2.25"
@@ -13,10 +14,15 @@
 	"devDependencies": {
 		"@allindevelopers/prettier-config": "^1.0.0",
 		"@vitejs/plugin-vue": "^2.2.0",
+		"husky": "^7.0.4",
+		"lint-staged": "^12.3.4",
 		"prettier": "^2.5.1",
 		"typescript": "^4.5.4",
 		"vite": "^2.8.0",
 		"vue-tsc": "^0.29.8"
 	},
-	"prettier": "@allindevelopers/prettier-config"
+	"prettier": "@allindevelopers/prettier-config",
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,vue,json,html,md}": "prettier --write"
+	}
 }
