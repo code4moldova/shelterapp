@@ -3,7 +3,7 @@
 		<div ref="mapRef" class="h-full" />
 		<img
 			v-if="activePointLayer"
-			class="absolute w-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-2.5"
+			class="absolute w-10 drop-shadow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-[17px]"
 			src="/map-pin.png"
 			alt=""
 		/>
@@ -62,6 +62,7 @@ import { Tile, Vector as LayerVector } from "ol/layer";
 import { OSM, Vector as SourceVector } from "ol/source";
 import { Point } from "ol/geom";
 import { Style, Fill, Stroke, Icon, Circle } from "ol/style";
+import * as proj from "ol/proj";
 import { onMounted, ref, watch } from "vue";
 import AddIcon from "../icons/AddIcon.vue";
 import RemoveIcon from "../icons/RemoveIcon.vue";
@@ -75,6 +76,13 @@ import FullscreenIcon from "../icons/FullscreenIcon.vue";
 import MapButton from "./MapButton.vue";
 import SmallMapButton from "./SmallMapButton.vue";
 import { useMapContext } from "../plugins/map-context";
+
+// TODO: Add proj4 for the rulers
+// proj4.defs(
+// 	"EPSG:4026",
+// 	"+proj=tmerc +lat_0=0 +lon_0=28.4 +k=0.9999400000000001 +x_0=200000 +y_0=-5000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
+// );
+// olProj4.register(proj4);
 
 const { activePointLayer, mapCenter } = useMapContext();
 
@@ -125,7 +133,12 @@ onMounted(() => {
 	olMap.on("moveend", () => {
 		const coords = olMap.getView().getCenter();
 		if (!coords) return;
-		mapCenter.value = coords;
+
+		mapCenter.value = proj.transform(
+			[coords[0], coords[1]],
+			"EPSG:3857",
+			"EPSG:4326",
+		);
 		const feature = new Feature({ geometry: new Point(coords), type: "point" });
 		addPointLayer.getSource().clear();
 		addPointLayer.getSource().addFeature(feature);

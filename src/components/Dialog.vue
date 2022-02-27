@@ -35,7 +35,7 @@
 								as="h3"
 								class="text-lg font-medium leading-6 text-gray-900 flex justify-between items-center"
 							>
-								{{ title }}
+								<span>{{ title }}</span>
 								<button
 									@click="closeModal"
 									class="px-2 pb-1 text-2xl"
