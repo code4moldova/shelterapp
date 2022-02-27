@@ -1,5 +1,5 @@
 <template>
-	<div class="relative" ref="mapWrapperRef">
+	<div class="relative rounded overflow-hidden h-full" ref="mapWrapperRef">
 		<div ref="mapRef" class="h-full" />
 		<MapButton class="absolute top-1 right-1" @click="requestFullScreen">
 			<FullscreenIcon class="w-4 h-4" />
