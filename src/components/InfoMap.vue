@@ -1,7 +1,9 @@
 <template>
 	<div class="relative">
 		<div ref="mapRef" class="h-full" />
-		<div class="absolute inset-y-0 flex flex-col justify-center gap-1 left-1">
+		<div
+			class="absolute inset-y-0 flex flex-col justify-center gap-1 left-1 items-start"
+		>
 			<MapButton @click="zoom(0.5)">
 				<AddIcon class="w-4 h-4" />
 			</MapButton>
@@ -14,12 +16,27 @@
 			<MapButton @click="locateMe">
 				<GpsFixedIcon class="w-4 h-4" />
 			</MapButton>
-			<MapButton>
-				<StraightenIcon class="w-4 h-4" />
-			</MapButton>
-			<MapButton>
-				<PolylineIcon class="w-4 h-4" />
-			</MapButton>
+			<div class="flex gap-1 items-center">
+				<MapButton @click="showRulerSubmenu = !showRulerSubmenu">
+					<StraightenIcon class="w-4 h-4" />
+				</MapButton>
+				<template v-if="showRulerSubmenu">
+					<SmallMapButton>m</SmallMapButton>
+					<SmallMapButton>km</SmallMapButton>
+				</template>
+			</div>
+			<div class="flex gap-1 items-center">
+				<MapButton @click="showPolygonSubmenu = !showPolygonSubmenu">
+					<PolylineIcon class="w-4 h-4" />
+				</MapButton>
+				<template v-if="showPolygonSubmenu">
+					<SmallMapButton>Ar</SmallMapButton>
+					<SmallMapButton>ha</SmallMapButton>
+					<SmallMapButton>m<sup>2</sup></SmallMapButton>
+					<SmallMapButton>km<sup>2</sup></SmallMapButton>
+				</template>
+			</div>
+
 			<MapButton>
 				<LayersIcon class="w-4 h-4" />
 			</MapButton>
@@ -52,6 +69,8 @@ import PolylineIcon from "../icons/PolylineIcon.vue";
 import LayersIcon from "../icons/LayersIcon.vue";
 import ViewListIcon from "../icons/ViewListIcon.vue";
 
+const showRulerSubmenu = ref(false);
+const showPolygonSubmenu = ref(false);
 const mapRef = ref<HTMLElement>();
 let olMap: Map;
 
@@ -112,16 +131,31 @@ const MapButton: FunctionalComponent<ButtonHTMLAttributes> = (
 	props,
 	{ slots },
 ) => {
-	const className = [
-		"bg-white rounded-lg border-2 border-blue-500 text-blue-500 p-1",
+	const classes = [
+		"bg-white rounded-lg border-2 border-blue-500 text-blue-500 p-1 text-xs",
 		props.class,
 	];
 
 	const newProps = {
 		...props,
-		class: className,
+		class: classes,
 	};
 
+	return h("button", newProps, slots);
+};
+
+const SmallMapButton: FunctionalComponent<ButtonHTMLAttributes> = (
+	props,
+	{ slots },
+) => {
+	const classes = [
+		"border-2 border-blue-500 bg-white rounded text-xs px-1",
+		props.class,
+	];
+	const newProps = {
+		...props,
+		class: classes,
+	};
 	return h("button", newProps, slots);
 };
 
