@@ -2,6 +2,7 @@
 import List from "./components/List.vue";
 import InfoMap from "./components/InfoMap.vue";
 import Header from "./components/Header.vue";
+import AddButton from "./components/BottomLeftAddBtn.vue";
 </script>
 
 <template>
@@ -12,4 +13,5 @@ import Header from "./components/Header.vue";
 			<InfoMap />
 		</div>
 	</div>
+	<AddButton />
 </template>
