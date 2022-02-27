@@ -1,6 +1,9 @@
 <template>
-	<div class="relative">
+	<div class="relative" ref="mapWrapperRef">
 		<div ref="mapRef" class="h-full" />
+		<MapButton class="absolute top-1 right-1" @click="requestFullScreen">
+			<FullscreenIcon class="w-4 h-4" />
+		</MapButton>
 		<div
 			class="absolute inset-y-0 flex flex-col justify-center gap-1 left-1 items-start"
 		>
@@ -68,10 +71,12 @@ import StraightenIcon from "../icons/StraightenIcon.vue";
 import PolylineIcon from "../icons/PolylineIcon.vue";
 import LayersIcon from "../icons/LayersIcon.vue";
 import ViewListIcon from "../icons/ViewListIcon.vue";
+import FullscreenIcon from "../icons/FullscreenIcon.vue";
 
 const showRulerSubmenu = ref(false);
 const showPolygonSubmenu = ref(false);
 const mapRef = ref<HTMLElement>();
+const mapWrapperRef = ref<HTMLElement>();
 let olMap: Map;
 
 onMounted(() => {
@@ -125,6 +130,14 @@ function locateMe() {
 	const geolocation = new Geolocation({ projection, tracking: true });
 	geolocation.once("change", () => addMeOnMap(geolocation.getPosition()));
 	addMeOnMap(geolocation.getPosition());
+}
+
+function requestFullScreen() {
+	if (document.fullscreenElement) {
+		document.exitFullscreen();
+	} else {
+		mapWrapperRef.value?.requestFullscreen();
+	}
 }
 
 const MapButton: FunctionalComponent<ButtonHTMLAttributes> = (
