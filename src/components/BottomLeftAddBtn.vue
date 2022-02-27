@@ -11,7 +11,7 @@ const items: [
 	{ slug: string; Component: any },
 ] = [
 	{ slug: "Предлагаю", Component: Predlagaiu },
-	{ slug: "Ишу", Component: Ishiu },
+	{ slug: "Ищу", Component: NeedIcon },
 ];
 function openModal() {
 	shownModal.value = true;
