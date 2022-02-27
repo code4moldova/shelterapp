@@ -4,6 +4,7 @@ import InfoMap from "./components/InfoMap.vue";
 import Header from "./components/Header.vue";
 import AddButton from "./components/AddButton.vue";
 import TopTabs from "./components/TopTabs.vue";
+import CreateOfferDialog from "./components/CreateOfferDialog.vue";
 </script>
 
 <template>
@@ -29,4 +30,5 @@ import TopTabs from "./components/TopTabs.vue";
 	</div>
 
 	<AddButton />
+	<CreateOfferDialog />
 </template>
