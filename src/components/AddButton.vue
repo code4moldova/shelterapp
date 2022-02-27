@@ -56,17 +56,23 @@ function closeModal(value: boolean) {
 	<button
 		v-if="!confirmLocation"
 		@click="confirmLocation = true"
-		class="fixed bg-blue-500 rounded-full bottom-10 right-10 p-2"
+		class="fixed bg-blue-500 rounded-full bottom-10 right-10 p-2 m-2"
 	>
 		<AddIcon class="w-10 h-10 text-yellow-400" />
 	</button>
-	<button
+	<div
 		v-if="confirmLocation"
-		@click="startOfferCreation"
-		class="fixed bg-blue-500 rounded-full bottom-10 right-10 p-2"
+		class="fixed bottom-10 right-10 left-10 sm:left-auto rounded-full bg-white flex justify-between items-center p-2"
 	>
-		<DoneIcon class="w-10 h-10 text-yellow-400" />
-	</button>
+		<strong class="block px-5 text-xs font-semibold truncate">
+			Укажите местоположение на карте
+			<br />
+			Нажмите <DoneIcon class="-mt-0.5 inline w-5 h-5" /> чтобы подтвердить
+		</strong>
+		<button @click="startOfferCreation" class="bg-blue-500 rounded-full p-2">
+			<DoneIcon class="w-10 h-10 text-yellow-400" />
+		</button>
+	</div>
 
 	<Dialog
 		:model-value="showModal"
