@@ -93,7 +93,7 @@ const mapRef = ref<HTMLElement>();
 const mapWrapperRef = ref<HTMLElement>();
 let olMap: Map;
 
-const addPointLayer = new LayerVector({
+const centerPointLayer = new LayerVector({
 	source: new SourceVector(),
 	style: new Style({
 		image: new Circle({
@@ -105,7 +105,9 @@ const addPointLayer = new LayerVector({
 	visible: false,
 });
 
-watch(activePointLayer, () => addPointLayer.setVisible(activePointLayer.value));
+watch(activePointLayer, () =>
+	centerPointLayer.setVisible(activePointLayer.value),
+);
 
 const source = new OSM();
 const layer = new Tile({ source, visible: true });
@@ -126,7 +128,7 @@ onMounted(() => {
 		target: mapRef.value,
 		// Removes all default controls
 		controls: [],
-		layers: [layer, searchLayer, addPointLayer],
+		layers: [layer, myLocationLayer, centerPointLayer],
 		view,
 	});
 
@@ -140,8 +142,8 @@ onMounted(() => {
 			"EPSG:4326",
 		);
 		const feature = new Feature({ geometry: new Point(coords), type: "point" });
-		addPointLayer.getSource().clear();
-		addPointLayer.getSource().addFeature(feature);
+		centerPointLayer.getSource().clear();
+		centerPointLayer.getSource().addFeature(feature);
 	});
 });
 
@@ -162,8 +164,8 @@ function goHome() {
 function addMeOnMap(position: number[] | undefined) {
 	if (!position) return;
 	const feature = new Feature({ geometry: new Point(position), type: "point" });
-	searchLayer.getSource().clear();
-	searchLayer.getSource().addFeature(feature);
+	myLocationLayer.getSource().clear();
+	myLocationLayer.getSource().addFeature(feature);
 	olMap.getView().animate({ zoom: 12, center: position, duration: 400 });
 }
 
@@ -182,7 +184,7 @@ function requestFullScreen() {
 	}
 }
 
-const searchLayer = new LayerVector({
+const myLocationLayer = new LayerVector({
 	source: new SourceVector(),
 	style: new Style({
 		fill: new Fill({
