@@ -18,7 +18,7 @@ function startOfferCreation() {
 	showModal.value = true;
 	confirmLocation.value = false;
 	const [lat, lon] = mapCenter.value ?? [];
-	fetch(reverseUrl(lat, lon));
+	// fetch(reverseUrl(lat, lon));
 }
 </script>
 
