@@ -36,7 +36,7 @@ function closeModal() {
 				class="block absolute right-2 top-2 cursor-pointer"
 				@click="closeModal()"
 			>
-				<XIcon class="h-6 z-60" />
+				<XIcon class="h-6 md:h-10 z-60" />
 			</div>
 
 			<div class="flex flex-col items-center">
@@ -52,7 +52,7 @@ function closeModal() {
 				<div
 					class="flex flex-col justify-between cursor-pointer items-center rounded bg-yellow-500 px-8 md:px-12 py-5 md:py-8"
 				>
-					<Ishiu class="h-10 w-10" id="blue" />
+					<Ishiu class="h-10 w-10" id="blue" icon-color="#fff" />
 				</div>
 				<span class="text-md md:text-xl">Ишу</span>
 			</div>
