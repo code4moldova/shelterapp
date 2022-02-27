@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { XIcon } from "@heroicons/vue/solid";
 // Icons
-import OfferIcon from "./icons/OfferIcon .vue";
+import OfferIcon from "./icons/OfferIcon.vue";
 import NeedIcon from "./icons/NeedIcon.vue";
 
 let shownModal = ref<boolean>(false);
