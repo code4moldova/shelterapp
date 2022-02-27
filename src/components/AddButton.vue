@@ -53,16 +53,20 @@ function closeModal(value: boolean) {
 </script>
 
 <template>
-	<button
+	<div
 		v-if="!confirmLocation"
-		@click="confirmLocation = true"
-		class="fixed bg-blue-500 rounded-full bottom-5 right-5 p-2 m-2"
+		class="fixed bottom-5 right-5 border border-transparent p-2 rounded-full"
 	>
-		<AddIcon class="w-10 h-10 text-yellow-400" />
-	</button>
+		<button
+			@click="confirmLocation = true"
+			class="bg-blue-500 rounded-full p-2 shadow"
+		>
+			<AddIcon class="w-10 h-10 text-yellow-400" />
+		</button>
+	</div>
 	<div
 		v-if="confirmLocation"
-		class="fixed bottom-5 right-5 left-5 sm:left-auto rounded-full bg-white flex justify-between items-center p-2"
+		class="fixed bottom-5 right-5 left-5 sm:left-auto rounded-full bg-white flex justify-between items-center p-2 border shadow"
 	>
 		<strong class="block px-5 text-xs font-semibold truncate">
 			Укажите местоположение на карте
