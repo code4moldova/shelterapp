@@ -2,13 +2,19 @@ import { ref } from "vue";
 
 type Options = {
 	name: string;
-	id: number;
+	id: OfferType;
 };
 
+export enum OfferType {
+	unknown,
+	offer,
+	search,
+}
+
 export const offerTypes: Options[] = [
-	{ name: "Неизвестно", id: 0 },
-	{ name: "Предлагаю", id: 1 },
-	{ name: "Ищу", id: 2 },
+	{ name: "Неизвестно", id: OfferType.unknown },
+	{ name: "Предлагаю", id: OfferType.offer },
+	{ name: "Ищу", id: OfferType.search },
 ];
 
 export const selectedOfferType = ref(offerTypes[0]);
