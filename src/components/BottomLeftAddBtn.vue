@@ -6,13 +6,6 @@ import OfferIcon from "./icons/OfferIcon .vue";
 import NeedIcon from "./icons/NeedIcon.vue";
 
 let shownModal = ref<boolean>(false);
-const items: [
-	{ slug: string; Component: any },
-	{ slug: string; Component: any },
-] = [
-	{ slug: "Предлагаю", Component: Predlagaiu },
-	{ slug: "Ищу", Component: NeedIcon },
-];
 function openModal() {
 	shownModal.value = true;
 }
@@ -43,7 +36,7 @@ function closeModal() {
 				<div
 					class="flex flex-col justify-between cursor-pointer items-center rounded bg-blue-500 px-8 md:px-12 py-5 md:py-8"
 				>
-					<Predlagaiu class="h-10 w-10" id="yellow" />
+					<OfferIcon class="h-10 w-10" id="yellow" />
 				</div>
 				<span class="text-md md:text-xl">Предлагаю</span>
 			</div>
@@ -52,16 +45,10 @@ function closeModal() {
 				<div
 					class="flex flex-col justify-between cursor-pointer items-center rounded bg-yellow-500 px-8 md:px-12 py-5 md:py-8"
 				>
-					<Ishiu class="h-10 w-10" id="blue" icon-color="#fff" />
+					<NeedIcon class="h-10 w-10" id="blue" icon-color="#fff" />
 				</div>
 				<span class="text-md md:text-xl">Ишу</span>
 			</div>
 		</div>
 	</template>
 </template>
-
-<style>
-#blue {
-	color: "blue";
-}
-</style>
