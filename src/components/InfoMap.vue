@@ -56,13 +56,7 @@ import { Tile, Vector as LayerVector } from "ol/layer";
 import { OSM, Vector as SourceVector } from "ol/source";
 import { Point } from "ol/geom";
 import { Style, Fill, Stroke, Icon } from "ol/style";
-import {
-	h,
-	onMounted,
-	ref,
-	FunctionalComponent,
-	ButtonHTMLAttributes,
-} from "vue";
+import { onMounted, ref } from "vue";
 import AddIcon from "../icons/AddIcon.vue";
 import RemoveIcon from "../icons/RemoveIcon.vue";
 import HomeIcon from "../icons/HomeIcon.vue";
@@ -72,6 +66,8 @@ import PolylineIcon from "../icons/PolylineIcon.vue";
 import LayersIcon from "../icons/LayersIcon.vue";
 import ViewListIcon from "../icons/ViewListIcon.vue";
 import FullscreenIcon from "../icons/FullscreenIcon.vue";
+import MapButton from "./MapButton.vue";
+import SmallMapButton from "./SmallMapButton.vue";
 
 const showRulerSubmenu = ref(false);
 const showPolygonSubmenu = ref(false);
@@ -139,38 +135,6 @@ function requestFullScreen() {
 		mapWrapperRef.value?.requestFullscreen();
 	}
 }
-
-const MapButton: FunctionalComponent<ButtonHTMLAttributes> = (
-	props,
-	{ slots },
-) => {
-	const classes = [
-		"bg-white rounded-lg border-2 border-blue-500 text-blue-500 p-1 text-xs",
-		props.class,
-	];
-
-	const newProps = {
-		...props,
-		class: classes,
-	};
-
-	return h("button", newProps, slots);
-};
-
-const SmallMapButton: FunctionalComponent<ButtonHTMLAttributes> = (
-	props,
-	{ slots },
-) => {
-	const classes = [
-		"border-2 border-blue-500 bg-white rounded text-xs px-1",
-		props.class,
-	];
-	const newProps = {
-		...props,
-		class: classes,
-	};
-	return h("button", newProps, slots);
-};
 
 const searchLayer = new LayerVector({
 	source: new SourceVector(),
