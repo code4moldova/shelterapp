@@ -29,5 +29,5 @@
 import { ref } from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 
-const tabs = ["Map", "Offers"];
+const tabs = ["Мапа", "Допомога"];
 </script>
