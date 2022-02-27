@@ -1,6 +1,12 @@
 <template>
 	<div class="relative rounded overflow-hidden h-full" ref="mapWrapperRef">
 		<div ref="mapRef" class="h-full" />
+		<img
+			v-if="activePointLayer"
+			class="absolute w-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-2.5"
+			src="/map-pin.png"
+			alt=""
+		/>
 		<MapButton class="absolute top-1 right-1" @click="requestFullScreen">
 			<FullscreenIcon class="w-4 h-4" />
 		</MapButton>
@@ -55,8 +61,8 @@ import { View, Map, Feature, Geolocation } from "ol";
 import { Tile, Vector as LayerVector } from "ol/layer";
 import { OSM, Vector as SourceVector } from "ol/source";
 import { Point } from "ol/geom";
-import { Style, Fill, Stroke, Icon } from "ol/style";
-import { onMounted, ref } from "vue";
+import { Style, Fill, Stroke, Icon, Circle } from "ol/style";
+import { onMounted, ref, watch } from "vue";
 import AddIcon from "../icons/AddIcon.vue";
 import RemoveIcon from "../icons/RemoveIcon.vue";
 import HomeIcon from "../icons/HomeIcon.vue";
@@ -68,34 +74,61 @@ import ViewListIcon from "../icons/ViewListIcon.vue";
 import FullscreenIcon from "../icons/FullscreenIcon.vue";
 import MapButton from "./MapButton.vue";
 import SmallMapButton from "./SmallMapButton.vue";
+import { useMapContext } from "../plugins/map-context";
+
+const { activePointLayer, mapCenter } = useMapContext();
 
 const showRulerSubmenu = ref(false);
 const showPolygonSubmenu = ref(false);
+
 const mapRef = ref<HTMLElement>();
 const mapWrapperRef = ref<HTMLElement>();
 let olMap: Map;
 
+const addPointLayer = new LayerVector({
+	source: new SourceVector(),
+	style: new Style({
+		image: new Circle({
+			radius: 7,
+			fill: new Fill({ color: "#FF7F11" }),
+			stroke: new Stroke({ color: "white", width: 1 }),
+		}),
+	}),
+	visible: false,
+});
+
+watch(activePointLayer, () => addPointLayer.setVisible(activePointLayer.value));
+
+const source = new OSM();
+const layer = new Tile({ source, visible: true });
+const view = new View({
+	projection: "EPSG:3857",
+	center: [3167475.240184986, 5952086.044611719],
+	extent: [
+		2437181.208848241, 5100607.633807939, 3893306.0536067626, 6903564.4554155,
+	],
+	zoom: 7,
+	minZoom: 5,
+});
+
 onMounted(() => {
 	if (!mapRef.value) return;
-
-	const source = new OSM();
-	const layer = new Tile({ source });
-	const view = new View({
-		projection: "EPSG:3857",
-		center: [3167475.240184986, 5952086.044611719],
-		extent: [
-			2437181.208848241, 5100607.633807939, 3893306.0536067626, 6903564.4554155,
-		],
-		zoom: 7,
-		minZoom: 5,
-	});
 
 	olMap = new Map({
 		target: mapRef.value,
 		// Removes all default controls
 		controls: [],
-		layers: [layer, searchLayer],
+		layers: [layer, searchLayer, addPointLayer],
 		view,
+	});
+
+	olMap.on("moveend", () => {
+		const coords = olMap.getView().getCenter();
+		if (!coords) return;
+		mapCenter.value = coords;
+		const feature = new Feature({ geometry: new Point(coords), type: "point" });
+		addPointLayer.getSource().clear();
+		addPointLayer.getSource().addFeature(feature);
 	});
 });
 
