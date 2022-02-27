@@ -136,7 +136,7 @@ const searchLayer = new LayerVector({
 			width: 3,
 		}),
 		image: new Icon({
-			src: "./assets/images/marker.png",
+			src: "/marker.png",
 			scale: 0.34,
 			anchor: [0.5, 1],
 			anchorXUnits: "fraction",
