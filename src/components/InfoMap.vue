@@ -1,8 +1,5 @@
 <template>
-	<div
-		class="h-full lg:h-auto lg:aspect-square relative rounded overflow-hidden"
-		ref="mapWrapperRef"
-	>
+	<div class="h-full relative rounded overflow-hidden" ref="mapWrapperRef">
 		<div ref="mapRef" class="h-full" />
 		<img
 			v-if="activePointLayer"
@@ -188,7 +185,7 @@ const clustersLayer = new VectorLayer({
 					image: new Circle({
 						radius: 10,
 						stroke: new Stroke({ color: "#fff" }),
-						fill: new Fill({ color: "#3399CC" }),
+						fill: new Fill({ color: size === 1 ? "orange" : "#3399CC" }),
 					}),
 					text: new Text({
 						text: size.toString(),
