@@ -12,7 +12,7 @@
 <script lang="ts">
 import { PhoneIcon, MailIcon } from "@heroicons/vue/solid";
 import IconFB from "../icons/IconFB.vue";
-import { ref, onMounted, reactive, watch } from "vue";
+import { ref, onMounted, reactive, watch, defineComponent } from "vue";
 import type { OfferType } from "./use-filters";
 import {
 	OfferCategory,
@@ -36,7 +36,7 @@ type Offer = {
 	contacts: Contact[];
 };
 
-export default {
+export default defineComponent({
 	name: "OfferList",
 	components: {
 		IconFB,
@@ -100,7 +100,7 @@ export default {
 				order: "id",
 				sort: "asc",
 			},
-			totalRecordCount: 0,
+			total: 0,
 			pageOptions: [{ value: 10, text: 10 }],
 			messages: {
 				pagingInfo: "Страницы {0}-{1} of {2}",
@@ -116,7 +116,7 @@ export default {
 			fetch(SHELTERS_ENDPOINT)
 				.then((data) => data.json())
 				.then((data) => {
-					table.totalRecordCount = data.length;
+					table.total = data.length;
 					data.forEach((item: any, index: number) => {
 						offers.value.push({
 							id: index,
@@ -214,13 +214,9 @@ export default {
 			},
 		);
 
-		return {
-			offers,
-			table,
-			doSearch,
-		};
+		return { table, doSearch };
 	},
-};
+});
 </script>
 
 <style scoped>
