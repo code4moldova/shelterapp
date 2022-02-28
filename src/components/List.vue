@@ -1,121 +1,31 @@
 <template>
-	<div>
-		<div class="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-			<table class="min-w-full divide-y divide-gray-200">
-				<thead class="bg-gray-50">
-					<tr>
-						<th
-							scope="col"
-							class="cursor-pointer px-6 py-3 text-left text-xs hover:bg-blue-200 font-medium text-gray-600 uppercase tracking-wider bg-gray-200"
-						>
-							Название
-						</th>
-						<th
-							scope="col"
-							class="cursor-pointer px-6 py-3 text-left text-xs hover:bg-blue-200 font-medium text-gray-600 uppercase tracking-wider bg-gray-200"
-						>
-							Регион
-						</th>
-						<th
-							scope="col"
-							class="cursor-pointer px-6 py-3 text-left text-xs hover:bg-blue-200 font-medium text-gray-600 uppercase tracking-wider bg-gray-200"
-						>
-							Локация
-						</th>
-						<th
-							scope="col"
-							class="cursor-pointer px-6 py-3 text-left text-xs hover:bg-blue-200 font-medium text-gray-600 uppercase tracking-wider bg-gray-200"
-						>
-							Тип помощи
-						</th>
-						<th scope="col" class="relative px-6 py-3 bg-gray-200">
-							<span class="sr-only">Edit</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="bg-white divide-y divide-gray-200">
-					<tr v-for="offer in offers" :key="offer.id">
-						<td class="px-6 py-4 whitespace-nowrap">
-							<div class="flex items-center">
-								<!--									<div class="flex-shrink-0 h-10 w-10">-->
-								<!--										<img class="h-10 w-10 rounded-full" :src="offer.image" alt="" />-->
-								<!--									</div>-->
-								<div>
-									<div class="text-sm font-medium text-gray-900">
-										{{ offer.name }}
-									</div>
-								</div>
-							</div>
-						</td>
-						<td class="px-6 py-4 whitespace-nowrap">
-							<div class="text-sm text-gray-900">{{ offer.region }}</div>
-						</td>
-						<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							<div class="text-sm text-gray-500">{{ offer.location }}</div>
-						</td>
-						<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							<div class="text-sm text-gray-500">{{ offer.helpType }}</div>
-						</td>
-						<td class="flex items-center text-sm py-4 px-6">
-							<a
-								v-if="offer.contacts.phone1"
-								:href="`tel:${offer.contacts.phone1}`"
-								class="text-blue-600 hover:text-blue-900"
-							>
-								<PhoneIcon class="h-5 w-5 text-blue-500" />
-							</a>
-							<a
-								v-if="offer.contacts.phone2"
-								:href="`tel:${offer.contacts.phone2}`"
-								class="text-blue-600 hover:text-blue-900"
-							>
-								<PhoneIcon class="h-5 w-5 text-blue-500" />
-							</a>
-							<a
-								v-if="offer.contacts.email"
-								:href="`mailto:${offer.contacts.phone1}`"
-								class="text-blue-600 hover:text-blue-900"
-							>
-								<MailIcon class="h-5 w-5 text-blue-500" />
-							</a>
-							<a
-								v-if="offer.contacts.facebook"
-								target="_blank"
-								:href="offer.contacts.facebook"
-								class="text-blue-600 hover:text-blue-900"
-							>
-								<IconFB />
-							</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<div class="w-full overflow-scroll">
+		<TableLite
+			class="overflow-scroll"
+			v-bind="table"
+			@is-finished="table.isLoading = false"
+			@do-search="doSearch"
+		/>
 	</div>
 </template>
 
 <script lang="ts">
 import { PhoneIcon, MailIcon } from "@heroicons/vue/solid";
 import IconFB from "../icons/IconFB.vue";
-import { ref } from "vue";
+import { ref, onMounted, reactive } from "vue";
+import { OfferType, OfferCategory } from "./use-filters";
+import TableLite from "vue3-table-lite/ts"; // TypeScript
+import type { Contact } from "./types";
+
 type Offer = {
 	id: number;
-	type: string;
+	type: OfferType;
 	name: string;
 	region: string;
 	location: string;
-	helpType: string;
+	category: OfferCategory[];
 	description?: string;
-	contacts: {
-		phone1: string;
-		phone2?: string;
-		facebook?: string;
-		email?: string;
-	};
-	secondary?: {
-		address?: string;
-		address2?: string;
-	};
+	contacts: Contact[];
 };
 
 export default {
@@ -124,93 +34,189 @@ export default {
 		IconFB,
 		PhoneIcon,
 		MailIcon,
+		TableLite,
 	},
 	setup() {
-		const initialOffers: Offer[] = [
-			{
-				id: 0,
-				type: "type",
-				name: "Offer name",
-				region: "Chisinau",
-				location: "Centru",
-				helpType: "Medicamente",
-				contacts: {
-					phone1: "+1 (917) 593-3258",
-					phone2: "+1 (917) 593-3258",
-					facebook: "https://www.facebook.com/jane.cooper",
-					email: "example@example.com",
-				},
-				secondary: {
-					address: "123 Main St",
-					address2: "Suite 200",
-				},
-			},
-			{
-				id: 1,
-				type: "type",
-				name: "Offer name",
-				region: "Chisinau",
-				location: "Centru",
-				helpType: "Medicamente",
-				contacts: {
-					phone1: "+1 (917) 593-3258",
-					phone2: "+1 (917) 593-3258",
-					facebook: "https://www.facebook.com/jane.cooper",
-					email: "example@example.com",
-				},
-				secondary: {
-					address: "123 Main St",
-					address2: "Suite 200",
-				},
-			},
-			{
-				id: 2,
-				type: "type",
-				name: "Offer name",
-				region: "Chisinau",
-				location: "Centru",
-				helpType: "Medicamente",
-				contacts: {
-					phone1: "+1 (917) 593-3258",
-					phone2: "+1 (917) 593-3258",
-					facebook: "https://www.facebook.com/jane.cooper",
-					email: "example@example.com",
-				},
-				secondary: {
-					address: "123 Main St",
-					address2: "Suite 200",
-				},
-			},
-			{
-				id: 3,
-				type: "type",
-				name: "Offer name",
-				region: "Chisinau",
-				location: "Centru",
-				helpType: "Medicamente",
-				contacts: {
-					phone1: "+1 (917) 593-3258",
-					phone2: "+1 (917) 593-3258",
-					facebook: "https://www.facebook.com/jane.cooper",
-					email: "example@example.com",
-				},
-				secondary: {
-					address: "123 Main St",
-					address2: "Suite 200",
-				},
-			},
-			// More people...
-		];
+		const SHELTERS_ENDPOINT = "https://api.iharta.md/helpua/request/shelters";
+		// const contactTypesHtml = [
+		// 	{ 0: "Другой", contact_type: 0 },
+		// 	{ name: "Моб. телефон", contact_type: 1 },
+		// 	{ name: "Дом. телефон", contact_type: 2 },
+		// 	{ name: "Вайбер", contact_type: 3 },
+		// 	{ name: "Ватсап", contact_type: 4 },
+		// 	{ name: "Телеграм", contact_type: 5 },
+		// 	{ name: "Фейсбук", contact_type: 6 },
+		// 	{ name: "Инстаграм", contact_type: 7 },
+		// 	{ name: "Эл. адрес", contact_type: 8 },
+		// 	{ name: "Веб-сайт", contact_type: 9 },
+		// ];
 
-		const offers = ref<Offer[]>(initialOffers);
+		function checkNumber(item: any) {
+			const parsed = parseInt(item);
 
-		// function filterBy(field) {
-		//
-		// }
+			return isNaN(item) ? item : parsed;
+		}
+		const table = reactive({
+			isLoading: false,
+			isReSearch: false,
+			columns: [
+				{
+					label: "id",
+					field: "id",
+					width: "3%",
+					sortable: true,
+					isKey: true,
+				},
+				{
+					label: "Название",
+					field: "name",
+					width: "5%",
+				},
+				{
+					label: "Регион",
+					field: "region",
+					width: "5%",
+					sortable: true,
+				},
+				{
+					label: "Локация",
+					field: "location",
+					width: "5%",
+					sortable: true,
+				},
+				{
+					label: "Описание",
+					field: "description",
+					width: "5%",
+				},
+				{
+					label: "Контакты",
+					field: "contacts",
+					display: (row: Offer) => {
+						let html = "";
+						row?.contacts.forEach((contact) => {
+							//const parsedContact = checkNumber(contact.contact)
+							html += `<span class="block">${contact.contact}</span>`;
+						});
+						return html;
+					},
+					width: "5%",
+				},
+			],
+			rows: [] as Array<Offer>,
+			pageSize: 10,
+			sortable: {
+				order: "id",
+				sort: "asc",
+			},
+			totalRecordCount: 0,
+			pageOptions: [{ value: 10, text: 10 }],
+			messages: {
+				pagingInfo: "Страницы {0}-{1} of {2}",
+				pageSizeChangeLabel: "Кол-во предложений:",
+				gotoPageLabel: "Переидти на страницу:",
+				noDataAvailable: "Нет данных",
+			},
+		});
+
+		const offers = ref<Offer[]>([]);
+
+		onMounted(() => {
+			fetch(SHELTERS_ENDPOINT)
+				.then((data) => data.json())
+				.then((data) => {
+					table.totalRecordCount = data.length;
+					data.forEach((item: any, index: number) => {
+						offers.value.push({
+							id: index,
+							name: item.name,
+							description: item.descript,
+							type: item.type,
+							category: item.helpType,
+							region: item.lev1,
+							location: item.lev2,
+							contacts: item.contacts,
+						});
+					});
+					doSearch(0, table.pageSize, "id", "asc");
+				});
+		});
+
+		/**
+		 * Table search event
+		 */
+
+		function sortNumbers(a: any, b: any) {
+			return a - b;
+		}
+
+		function sortStrings(a: any, b: any) {
+			let nameA = a.toUpperCase(); // ignore upper and lowercase
+			let nameB = b.toUpperCase(); // ignore upper and lowercase
+			if (nameA < nameB) {
+				return -1;
+			}
+			if (nameA > nameB) {
+				return 1;
+			}
+
+			// names must be equal
+			return 0;
+		}
+
+		const columnSort: Record<string, any> = {
+			id: sortNumbers,
+			name: sortStrings,
+			region: sortStrings,
+			location: sortStrings,
+			description: sortStrings,
+			type: sortStrings,
+		};
+
+		const doSearch = (
+			offset: number,
+			limit: number,
+			order: string,
+			sort: string,
+		) => {
+			table.isReSearch = offset == undefined;
+
+			table.rows = offers.value
+				.sort((a: any, b: any) => {
+					const result = columnSort[order](a[order], b[order]);
+					return sort == "asc" ? result : result * -1;
+				})
+				.slice(offset, limit + offset);
+
+			table.sortable.order = order;
+			table.sortable.sort = sort;
+		};
+
 		return {
 			offers,
-			//filterBy,
+			table,
+			doSearch,
 		};
 	},
 };
 </script>
+
+<style scoped>
+::v-deep(.vtl-table .vtl-thead .vtl-thead-th) {
+	@apply bg-blue-600 text-white border-blue-600;
+}
+
+::v-deep(.vtl-paging) {
+	@apply justify-center;
+}
+
+::v-deep(.vtl-paging-count-label),
+::v-deep(.vtl-paging-change-div),
+::v-deep(.vtl-paging-page-label),
+::v-deep(.vtl-paging-info) {
+	@apply hidden;
+}
+::v-deep(.vtl-paging-pagination-page-link) {
+	border: none;
+}
+</style>

@@ -8,3 +8,5 @@ export type Offer = {
 	type: FilterOption;
 	help_type: FilterOption;
 };
+
+export type Contact = { contact_type: number; contact: string };

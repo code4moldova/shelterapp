@@ -2,13 +2,24 @@ import { ref } from "vue";
 
 type Options = {
 	name: string;
-	id: OfferType;
+	id: OfferType | OfferCategory;
 };
 
 export enum OfferType {
 	unknown,
 	offer,
 	search,
+}
+
+export enum OfferCategory {
+	other = 0,
+	home = 1,
+	transport = 2,
+	medical = 3,
+	consulting = 4,
+	volunteering = 5,
+	groceries = 7,
+	network = 8,
 }
 
 export const offerTypes: Options[] = [
@@ -20,14 +31,14 @@ export const offerTypes: Options[] = [
 export const selectedOfferType = ref(offerTypes[0]);
 
 export const offerCategories: Options[] = [
-	{ name: "Другое", id: 0 },
-	{ name: "Проживание", id: 1 },
-	{ name: "Транспорт", id: 2 },
-	{ name: "Медицинские услуги", id: 3 },
-	{ name: "Консультирование", id: 4 },
-	{ name: "Волонтерство / Перевод", id: 5 },
-	{ name: "Одежда / Продукты / Питание", id: 7 },
-	{ name: "Услуги связи / Интернета", id: 8 },
+	{ name: "Другое", id: OfferCategory.other },
+	{ name: "Проживание", id: OfferCategory.home },
+	{ name: "Транспорт", id: OfferCategory.transport },
+	{ name: "Медицинские услуги", id: OfferCategory.medical },
+	{ name: "Консультирование", id: OfferCategory.consulting },
+	{ name: "Волонтерство / Перевод", id: OfferCategory.volunteering },
+	{ name: "Одежда / Продукты / Питание", id: OfferCategory.groceries },
+	{ name: "Услуги связи / Интернета", id: OfferCategory.network },
 ];
 
 export const selectedOfferCategory = ref<Options[]>([]);
