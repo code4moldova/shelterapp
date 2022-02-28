@@ -76,6 +76,7 @@ import FullscreenIcon from "../icons/FullscreenIcon.vue";
 import MapButton from "./MapButton.vue";
 import SmallMapButton from "./SmallMapButton.vue";
 import { useMapContext } from "../plugins/map-context";
+import { boundingExtent } from "ol/extent";
 
 // TODO: Add proj4 for the rulers
 // proj4.defs(
@@ -166,10 +167,10 @@ const clusterSource = new Cluster({
 	distance: 20,
 	minDistance: 30,
 	// @ts-expect-error
-	geometryFunction: (f) => {
-		const coord = raioane.get(f.get("raion"));
-		return coord ? new Point(coord) : null;
-	},
+	// geometryFunction: (f) => {
+	// 	const coord = raioane.get(f.get("raion"));
+	// 	return coord ? new Point(coord) : null;
+	// },
 });
 
 const styleCache: any = {};
@@ -233,6 +234,17 @@ onMounted(() => {
 		const feature = new Feature({ geometry: new Point(coords), type: "point" });
 		centerPointLayer.getSource().clear();
 		centerPointLayer.getSource().addFeature(feature);
+	});
+
+	olMap.on("click", async (e) => {
+		const clickedFeatures = await clustersLayer.getFeatures(e.pixel);
+		if (!clickedFeatures.length) return;
+		// Get clustered Coordinates
+		const features: Feature<Point>[] = clickedFeatures[0].get("features");
+		if (features.length < 2) return;
+		const points = features.map((r) => r.getGeometry().getCoordinates());
+		const extent = boundingExtent(points);
+		olMap.getView().fit(extent, { duration: 1000, padding: [50, 50, 50, 50] });
 	});
 });
 
