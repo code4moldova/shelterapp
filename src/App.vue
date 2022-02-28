@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import List from "./components/List.vue";
+import OfferList from "./components/OfferList.vue";
 import InfoMap from "./components/InfoMap.vue";
 import Header from "./components/Header.vue";
 import AddButton from "./components/AddButton.vue";
@@ -20,12 +20,12 @@ const isDesktop = useMediaQuery("(min-width: 1024px)");
 				<InfoMap />
 			</template>
 			<template #offers>
-				<List />
+				<OfferList />
 			</template>
 		</TopTabs>
 
 		<div v-if="isDesktop" class="grid grid-cols-2 flex-1 overflow-y-auto">
-			<List />
+			<OfferList />
 			<InfoMap />
 		</div>
 	</div>
