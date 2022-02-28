@@ -1,5 +1,8 @@
 <template>
-	<div class="relative rounded overflow-hidden h-full" ref="mapWrapperRef">
+	<div
+		class="h-full lg:h-auto lg:aspect-square relative rounded overflow-hidden"
+		ref="mapWrapperRef"
+	>
 		<div ref="mapRef" class="h-full" />
 		<img
 			v-if="activePointLayer"
