@@ -10,10 +10,7 @@ import { defineComponent, PropType, computed } from "vue";
 export default defineComponent({
 	name: "BaseButton",
 	props: {
-		color: {
-			type: String as PropType<"blue" | "white-outline" | "red">,
-			default: "border-white",
-		},
+		color: String as PropType<"blue" | "white-outline" | "red">,
 	},
 	emits: ["click"],
 	setup(props) {

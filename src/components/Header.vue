@@ -3,9 +3,9 @@
 		<img src="../assets/logo.png" alt="app logo" class="h-8" />
 		<strong class="text-sm">Допомога Молдова – Україна</strong>
 
-		<BaseButton @click="open = true">
+		<Button @click="open = true">
 			<FilterIcon class="w-3.5 h-3.5" />
-		</BaseButton>
+		</Button>
 		<HeaderFilter :is-open="open" @close="open = false" />
 	</header>
 </template>
@@ -13,13 +13,13 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import HeaderFilter from "./HeaderFilter.vue";
-import BaseButton from "./Base/BaseButton.vue";
+import Button from "./Button.vue";
 import FilterIcon from "../icons/FilterIcon.vue";
 export default defineComponent({
 	name: "Header",
 	components: {
 		HeaderFilter,
-		BaseButton,
+		Button,
 		FilterIcon,
 	},
 	setup() {
