@@ -154,7 +154,7 @@ import { computed, PropType, ref } from "vue";
 
 import { offerCategories, OfferType } from "./use-filters";
 import type { Contact } from "./types";
-import LoadingIcon from "./icons/LoadingIcon.vue";
+import LoadingIcon from "../icons/LoadingIcon.vue";
 
 const props = defineProps({
 	type: {

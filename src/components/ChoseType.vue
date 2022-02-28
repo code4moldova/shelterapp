@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts" setup>
-import OfferIcon from "./icons/OfferIcon.vue";
-import NeedIcon from "./icons/NeedIcon.vue";
+import OfferIcon from "../icons/OfferIcon.vue";
+import NeedIcon from "../icons/NeedIcon.vue";
 import { OfferType } from "./use-filters";
 defineEmits(["type"]);
 </script>

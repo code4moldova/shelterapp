@@ -14,7 +14,7 @@
 import { defineComponent, ref } from "vue";
 import HeaderFilter from "./HeaderFilter.vue";
 import BaseButton from "./Base/BaseButton.vue";
-import FilterIcon from "./icons/FilterIcon.vue";
+import FilterIcon from "../icons/FilterIcon.vue";
 export default defineComponent({
 	name: "Header",
 	components: {
