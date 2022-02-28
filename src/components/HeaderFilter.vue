@@ -2,7 +2,7 @@
 	<Dialog
 		:open="isOpen"
 		@close="$emit('close')"
-		class="absolute top-14 left-0 bg-white px-8 py-4 w-full max-w-xl rounded"
+		class="shadow-lg rounded-lg absolute top-14 left-0 bg-white px-8 py-4 w-full max-w-xl"
 	>
 		<form @submit.prevent class="grid md:grid-cols-2 gap-4">
 			<Listbox as="div" v-model="selectedOfferType">

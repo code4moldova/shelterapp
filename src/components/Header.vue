@@ -1,10 +1,10 @@
 <template>
 	<header class="bg-blue-600 p-3 text-white flex gap-3 items-center relative">
-		<img src="../assets/logo.png" alt="app logo" class="w-10" />
+		<img src="../assets/logo.png" alt="app logo" class="h-8" />
 		<strong class="text-sm">Допомога Молдова – Україна</strong>
 
 		<BaseButton @click="open = true">
-			<FilterIcon class="w-4 h-4" />
+			<FilterIcon class="w-3.5 h-3.5" />
 		</BaseButton>
 		<HeaderFilter :is-open="open" @close="open = false" />
 	</header>
