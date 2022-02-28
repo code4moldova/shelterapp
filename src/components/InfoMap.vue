@@ -235,10 +235,10 @@ onMounted(() => {
 		controls: [],
 		layers: [
 			tileLayer,
+			roadsLayer,
 			myLocationLayer,
 			centerPointLayer,
 			clustersLayer,
-			roadsLayer,
 		],
 		view,
 	});
