@@ -24,7 +24,7 @@ const isDesktop = useMediaQuery("(min-width: 1024px)");
 			</template>
 		</TopTabs>
 
-		<div v-if="isDesktop" class="grid grid-cols-2 p-4 gap-4 flex-1">
+		<div v-if="isDesktop" class="grid grid-cols-2 flex-1 overflow-y-auto">
 			<List />
 			<InfoMap />
 		</div>

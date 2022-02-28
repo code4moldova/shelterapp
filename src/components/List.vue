@@ -1,12 +1,10 @@
 <template>
-	<div class="w-full overflow-scroll">
-		<TableLite
-			class="overflow-scroll"
-			v-bind="table"
-			@is-finished="table.isLoading = false"
-			@do-search="doSearch"
-		/>
-	</div>
+	<TableLite
+		class="overflow-auto"
+		v-bind="table"
+		@is-finished="table.isLoading = false"
+		@do-search="doSearch"
+	/>
 </template>
 
 <script lang="ts">
