@@ -4,7 +4,7 @@
 		@close="$emit('close')"
 		class="absolute top-14 left-0 bg-white px-8 py-4 w-full max-w-xl rounded"
 	>
-		<form class="grid md:grid-cols-2 gap-4">
+		<form @submit.prevent class="grid md:grid-cols-2 gap-4">
 			<Listbox as="div" v-model="selectedOfferType">
 				<ListboxLabel class="block text-sm font-medium text-gray-700">
 					Тип Предложения

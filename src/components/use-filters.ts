@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-type Options = {
+type Option = {
 	name: string;
 	id: OfferType | OfferCategory;
 };
@@ -22,7 +22,7 @@ export enum OfferCategory {
 	network = 8,
 }
 
-export const offerTypes: Options[] = [
+export const offerTypes: Option[] = [
 	{ name: "Неизвестно", id: OfferType.unknown },
 	{ name: "Предлагаю", id: OfferType.offer },
 	{ name: "Ищу", id: OfferType.search },
@@ -30,7 +30,7 @@ export const offerTypes: Options[] = [
 
 export const selectedOfferType = ref(offerTypes[0]);
 
-export const offerCategories: Options[] = [
+export const offerCategories: Option[] = [
 	{ name: "Другое", id: OfferCategory.other },
 	{ name: "Проживание", id: OfferCategory.home },
 	{ name: "Транспорт", id: OfferCategory.transport },
@@ -41,11 +41,11 @@ export const offerCategories: Options[] = [
 	{ name: "Услуги связи / Интернета", id: OfferCategory.network },
 ];
 
-export const selectedOfferCategory = ref<Options[]>([]);
+export const selectedOfferCategory = ref<number[]>([]);
 
 export const personsQnt = ref<number | null>(null);
 
-export const offerVariants: Options[] = [
+export const offerVariants: Option[] = [
 	{ name: "Все", id: 99 },
 	{ name: "Государственные ", id: 0 },
 	{ name: "Частные", id: 1 },
