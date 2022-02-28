@@ -60,7 +60,8 @@
 import { View, Map as OlMap, Feature, Geolocation } from "ol";
 import { Tile, Vector as VectorLayer } from "ol/layer";
 import { OSM, Vector as VectorSource, Cluster } from "ol/source";
-import { Point } from "ol/geom";
+import { Geometry, Point } from "ol/geom";
+import { GeoJSON } from "ol/format";
 import { Style, Fill, Stroke, Icon, Circle, Text } from "ol/style";
 import * as proj from "ol/proj";
 import { onMounted, ref, watch } from "vue";
@@ -196,6 +197,12 @@ const clustersLayer = new VectorLayer({
 	},
 });
 
+const roadsSource = new VectorSource();
+const roadsLayer = new VectorLayer({
+	source: roadsSource,
+	style: new Style({ stroke: new Stroke({ color: "green", width: 1 }) }),
+});
+
 onMounted(async () => {
 	const response = await fetch("https://api.iharta.md/helpua/request/poi");
 	type Poi = { x: number; y: number; state: string };
@@ -210,6 +217,12 @@ onMounted(async () => {
 	poiSource.addFeatures(features);
 });
 
+onMounted(async () => {
+	const response = await fetch("/help_roads_3857.geojson");
+	const json = await response.json();
+	roadsSource.addFeatures(new GeoJSON().readFeatures(json));
+});
+
 onMounted(() => {
 	if (!mapRef.value) return;
 
@@ -217,7 +230,13 @@ onMounted(() => {
 		target: mapRef.value,
 		// Removes all default controls
 		controls: [],
-		layers: [tileLayer, myLocationLayer, centerPointLayer, clustersLayer],
+		layers: [
+			tileLayer,
+			myLocationLayer,
+			centerPointLayer,
+			clustersLayer,
+			roadsLayer,
+		],
 		view,
 	});
 
