@@ -12,8 +12,15 @@
 <script lang="ts">
 import { PhoneIcon, MailIcon } from "@heroicons/vue/solid";
 import IconFB from "../icons/IconFB.vue";
-import { ref, onMounted, reactive } from "vue";
-import { OfferType, OfferCategory } from "./use-filters";
+import { ref, onMounted, reactive, watch } from "vue";
+import type { OfferType } from "./use-filters";
+import {
+	OfferCategory,
+	personsQnt,
+	selectedOfferType,
+	selectedOfferCategory,
+	selectedOfferVariant,
+} from "./use-filters";
 import TableLite from "vue3-table-lite/ts"; // TypeScript
 import type { Contact } from "./types";
 
@@ -23,7 +30,8 @@ type Offer = {
 	name: string;
 	region: string;
 	location: string;
-	category: OfferCategory[];
+	categories: OfferCategory[];
+	maxNumber: number;
 	description?: string;
 	contacts: Contact[];
 };
@@ -38,24 +46,7 @@ export default {
 	},
 	setup() {
 		const SHELTERS_ENDPOINT = "https://api.iharta.md/helpua/request/shelters";
-		// const contactTypesHtml = [
-		// 	{ 0: "Другой", contact_type: 0 },
-		// 	{ name: "Моб. телефон", contact_type: 1 },
-		// 	{ name: "Дом. телефон", contact_type: 2 },
-		// 	{ name: "Вайбер", contact_type: 3 },
-		// 	{ name: "Ватсап", contact_type: 4 },
-		// 	{ name: "Телеграм", contact_type: 5 },
-		// 	{ name: "Фейсбук", contact_type: 6 },
-		// 	{ name: "Инстаграм", contact_type: 7 },
-		// 	{ name: "Эл. адрес", contact_type: 8 },
-		// 	{ name: "Веб-сайт", contact_type: 9 },
-		// ];
 
-		function checkNumber(item: any) {
-			const parsed = parseInt(item);
-
-			return isNaN(item) ? item : parsed;
-		}
 		const table = reactive({
 			isLoading: false,
 			isReSearch: false,
@@ -132,7 +123,8 @@ export default {
 							name: item.name,
 							description: item.descript,
 							type: item.type,
-							category: item.helpType,
+							categories: item.help_type || [],
+							maxNumber: item.max_number,
 							region: item.lev1,
 							location: item.lev2,
 							contacts: item.contacts,
@@ -182,6 +174,24 @@ export default {
 			table.isReSearch = offset == undefined;
 
 			table.rows = offers.value
+				// max people number
+				.filter((row) => {
+					if (!+row.maxNumber || !personsQnt.value) return true;
+					return +row.maxNumber < personsQnt.value;
+				})
+				// Offer type
+				.filter((row) => {
+					if (!row.type || !selectedOfferType.value.id) return true;
+					return +row.type === selectedOfferType.value.id;
+				})
+				.filter((row) => {
+					if (!selectedOfferCategory.value.length) return true;
+					return (
+						row.categories.filter((category) =>
+							selectedOfferCategory.value.includes(category),
+						).length > 0
+					);
+				})
 				.sort((a: any, b: any) => {
 					const result = columnSort[order](a[order], b[order]);
 					return sort == "asc" ? result : result * -1;
@@ -191,6 +201,18 @@ export default {
 			table.sortable.order = order;
 			table.sortable.sort = sort;
 		};
+
+		watch(
+			[
+				personsQnt,
+				selectedOfferType,
+				selectedOfferCategory,
+				selectedOfferVariant,
+			],
+			() => {
+				doSearch(0, table.pageSize, "id", "asc");
+			},
+		);
 
 		return {
 			offers,
