@@ -153,7 +153,7 @@
 import { computed, PropType, ref } from "vue";
 
 import { offerCategories, OfferType } from "./use-filters";
-
+import type { Contact } from "./types";
 import LoadingIcon from "./icons/LoadingIcon.vue";
 
 const props = defineProps({
@@ -178,8 +178,6 @@ const props = defineProps({
 		required: true,
 	},
 });
-
-type Contact = { contact_type: number; contact: string };
 
 const createOfferLoading = ref(false);
 const createOfferSuccess = ref(false);
