@@ -200,7 +200,7 @@ const clustersLayer = new VectorLayer({
 const roadsSource = new VectorSource();
 const roadsLayer = new VectorLayer({
 	source: roadsSource,
-	style: new Style({ stroke: new Stroke({ color: "green", width: 1 }) }),
+	style: new Style({ stroke: new Stroke({ color: "green", width: 2 }) }),
 });
 
 onMounted(async () => {
