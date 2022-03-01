@@ -21,6 +21,28 @@ export enum OfferCategory {
 	groceries = 7,
 	network = 8,
 }
+const offerCategoryL10n: Record<OfferCategory, string> = {
+	[OfferCategory.other]: "Другое",
+	[OfferCategory.home]: "Проживание",
+	[OfferCategory.transport]: "Транспорт",
+	[OfferCategory.medical]: "Медицинские услуги",
+	[OfferCategory.consulting]: "Консультирование",
+	[OfferCategory.volunteering]: "Волонтерство / Перевод",
+	[OfferCategory.groceries]: "Одежда / Продукты / Питание",
+	[OfferCategory.network]: "Услуги связи / Интернета",
+};
+export const offerCategory = (category: OfferCategory) =>
+	offerCategoryL10n[category];
+export const offerCategories: Option[] = [
+	OfferCategory.other,
+	OfferCategory.home,
+	OfferCategory.transport,
+	OfferCategory.medical,
+	OfferCategory.consulting,
+	OfferCategory.volunteering,
+	OfferCategory.groceries,
+	OfferCategory.network,
+].map((c) => ({ name: offerCategory(c), id: c }));
 
 export const offerTypes: Option[] = [
 	{ name: "Неизвестно", id: OfferType.unknown },
@@ -29,17 +51,6 @@ export const offerTypes: Option[] = [
 ];
 
 export const selectedOfferType = ref(offerTypes[0]);
-
-export const offerCategories: Option[] = [
-	{ name: "Другое", id: OfferCategory.other },
-	{ name: "Проживание", id: OfferCategory.home },
-	{ name: "Транспорт", id: OfferCategory.transport },
-	{ name: "Медицинские услуги", id: OfferCategory.medical },
-	{ name: "Консультирование", id: OfferCategory.consulting },
-	{ name: "Волонтерство / Перевод", id: OfferCategory.volunteering },
-	{ name: "Одежда / Продукты / Питание", id: OfferCategory.groceries },
-	{ name: "Услуги связи / Интернета", id: OfferCategory.network },
-];
 
 export const selectedOfferCategory = ref<number[]>([]);
 

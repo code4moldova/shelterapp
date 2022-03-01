@@ -26,8 +26,7 @@
 		"typescript": "^4.5.4",
 		"vite": "^2.8.0",
 		"vue": "^3.2.25",
-		"vue-tsc": "^0.29.8",
-		"vue3-table-lite": "^1.1.7-1"
+		"vue-tsc": "^0.29.8"
 	},
 	"prettier": "@allindevelopers/prettier-config",
 	"lint-staged": {
