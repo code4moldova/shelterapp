@@ -2,9 +2,12 @@ import { Feature } from "ol";
 import { Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource, Cluster } from "ol/source";
 import { Point } from "ol/geom";
-import { Style, Fill, Stroke, Circle, Text, IconImage } from "ol/style";
+import { Style, Fill, Stroke, Circle, Text } from "ol/style";
 import * as proj from "ol/proj";
 import { onMounted } from "vue";
+import { Poi } from "../types";
+
+const styleCache: any = {};
 
 export function usePoi() {
 	const poiVectorSource = new VectorSource();
@@ -12,13 +15,12 @@ export function usePoi() {
 		source: poiVectorSource,
 		distance: 20,
 		minDistance: 30,
-		// geometryFunction: (f) => {
-		// 	const coord = raioane.get(f.get("raion"));
+		// geometryFunction: (feature) => {
+		// 	const coord = raioane.get(feature.get("raion"));
 		// 	return coord ? new Point(coord) : null;
 		// },
 	});
 
-	const styleCache: any = {};
 	const poiClusterLayer = new VectorLayer({
 		source: poiClusterSource,
 		style: (feature) => {
@@ -44,14 +46,16 @@ export function usePoi() {
 
 	onMounted(async () => {
 		const response = await fetch("https://api.iharta.md/helpua/request/poi");
-		type Poi = { x: number; y: number; state: string };
 		const data: Array<Poi> = await response.json();
 
-		const features = data.map((poi) => {
-			const coord = proj.transform([poi.x, poi.y], "EPSG:4326", "EPSG:3857");
-			const geometry = new Point(coord);
-			return new Feature({ geometry, raion: poi.state });
-		});
+		const features = data
+			// Not happening, but just in case filter
+			.filter((poi) => poi.pois.length !== 0)
+			.map((poi) => {
+				const coord = proj.transform([poi.x, poi.y], "EPSG:4326", "EPSG:3857");
+				const geometry = new Point(coord);
+				return new Feature({ geometry, poi });
+			});
 
 		poiVectorSource.addFeatures(features);
 	});

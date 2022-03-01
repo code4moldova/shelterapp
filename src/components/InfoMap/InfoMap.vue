@@ -1,6 +1,30 @@
 <template>
 	<div class="h-full relative rounded overflow-hidden" ref="mapWrapperRef">
 		<div ref="mapRef" class="h-full" />
+		<div ref="overlayRef">
+			<div
+				v-if="popupInfo"
+				class="bg-white px-3 py-2 shadow-lg rounded-lg relative min-w-40"
+			>
+				<p class="flex justify-between gap-3 mb-1 text-lg font-semibold">
+					<span>Інформація</span>
+					<button @click="closePopup" class="text-red-500">&times;</button>
+				</p>
+				<p class="flex gap-2 items-center text-gray-600">
+					<LocationMarkerIcon class="w-5 h-5 inline" />
+					<span>{{ popupInfo.state }}, {{ popupInfo.municipality }}</span>
+				</p>
+				<ul>
+					<li
+						v-for="poi in popupInfo.pois"
+						class="flex gap-2 items-center text-gray-600"
+					>
+						<OfficeBuildingIcon class="w-5 h-5 inline" />
+						<span>{{ poi.name_ru || poi.name_ro }}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
 		<img
 			v-if="activePointLayer"
 			class="absolute w-10 drop-shadow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-[17px]"
@@ -70,7 +94,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Map as OlMap, Feature, Geolocation } from "ol";
+import { Map as OlMap, Feature, Geolocation, Overlay } from "ol";
 import { Point } from "ol/geom";
 import * as proj from "ol/proj";
 import { onMounted, ref, watch } from "vue";
@@ -91,6 +115,8 @@ import MapSelect from "../MapSelect.vue";
 import { useRoads } from "./use-roads";
 import { usePoi } from "./use-poi";
 import { centerPointLayer, myLocationLayer, tileLayer, view } from "./layers";
+import { LocationMarkerIcon, OfficeBuildingIcon } from "@heroicons/vue/solid";
+import { Poi } from "../types";
 
 // TODO: Add proj4 for the rulers
 // proj4.defs(
@@ -100,28 +126,39 @@ import { centerPointLayer, myLocationLayer, tileLayer, view } from "./layers";
 // olProj4.register(proj4);
 
 const { activePointLayer, mapCenter } = useMapContext();
-const showRulerSubmenu = ref(false);
-const showPolygonSubmenu = ref(false);
-
 const { roads, selectedRoad, roadsLayer } = useRoads();
 const { poiClusterLayer } = usePoi();
-
-const mapRef = ref<HTMLElement>();
-const mapWrapperRef = ref<HTMLElement>();
 let olMap: OlMap;
+const showRulerSubmenu = ref(false);
+const showPolygonSubmenu = ref(false);
+const mapRef = ref<HTMLElement>();
+const overlayRef = ref<HTMLElement>();
+const mapWrapperRef = ref<HTMLElement>();
+const popupInfo = ref<Poi>();
 
 watch(activePointLayer, () =>
 	centerPointLayer.setVisible(activePointLayer.value),
 );
 
+const popupOverlay = new Overlay({
+	autoPan: {
+		animation: {
+			duration: 250,
+		},
+	},
+});
+
 onMounted(() => {
 	if (!mapRef.value) return;
+
+	popupOverlay.setElement(overlayRef.value);
 
 	olMap = new OlMap({
 		target: mapRef.value,
 		// Removes all default controls
 		controls: [],
 		view,
+		overlays: [popupOverlay],
 		layers: [
 			tileLayer,
 			roadsLayer,
@@ -146,18 +183,34 @@ onMounted(() => {
 	});
 
 	olMap.on("click", async (e) => {
-		const clickedFeatures = await poiClusterLayer.getFeatures(e.pixel);
-		if (!clickedFeatures.length) return;
+		const [cluster] = await poiClusterLayer.getFeatures(e.pixel);
+		if (!cluster) return;
+
 		// Get clustered Coordinates
-		const features: Feature<Point>[] = clickedFeatures[0].get("features");
-		if (features.length < 2) return;
-		const points = features.map((r) => r.getGeometry()?.getCoordinates());
-		const extent = boundingExtent(points as number[][]);
-		olMap
-			.getView()
-			.fit(extent, { duration: 1000, padding: [100, 100, 100, 100] });
+		const features: Feature<Point>[] = cluster.get("features");
+
+		if (features.length < 1) return;
+
+		// Still cluster, zoom in on click
+		if (features.length > 1) {
+			const points = features.map((r) => r.getGeometry()?.getCoordinates());
+			const extent = boundingExtent(points as number[][]);
+			olMap
+				.getView()
+				.fit(extent, { duration: 1000, padding: [100, 100, 100, 100] });
+			return;
+		}
+
+		popupInfo.value = features[0].get("poi");
+		const coordinate = e.coordinate;
+		popupOverlay.setPosition(coordinate);
 	});
 });
+
+function closePopup() {
+	popupOverlay.setPosition(undefined);
+	popupInfo.value = undefined;
+}
 
 function zoom(delta: number) {
 	const zoom = olMap.getView().getZoom();
