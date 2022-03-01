@@ -201,9 +201,11 @@ onMounted(() => {
 			return;
 		}
 
-		popupInfo.value = features[0].get("poi");
-		const coordinate = e.coordinate;
-		popupOverlay.setPosition(coordinate);
+		const feature = features[0];
+		const point = feature.getGeometry();
+		if (!point) return;
+		popupInfo.value = feature.get("poi");
+		popupOverlay.setPosition(point.getCoordinates());
 	});
 });
 
