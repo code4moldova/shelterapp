@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { KeepAlive } from "vue";
 import OfferList from "./components/OfferList.vue";
-import InfoMap from "./components/InfoMap.vue";
+import InfoMap from "./components/InfoMap";
 import Header from "./components/Header.vue";
 import AddButton from "./components/AddButton.vue";
 import { useMediaQuery } from "@vueuse/core";
