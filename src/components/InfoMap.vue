@@ -53,6 +53,13 @@
 				<ViewListIcon class="w-4 h-4" />
 			</MapButton>
 		</div>
+		<div class="absolute top-1 left-1">
+			<MapSelect
+				label="Маршрут передвижения"
+				v-model="selectedRoad"
+				:options="roads"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -78,6 +85,8 @@ import MapButton from "./MapButton.vue";
 import SmallMapButton from "./SmallMapButton.vue";
 import { useMapContext } from "../plugins/map-context";
 import { boundingExtent } from "ol/extent";
+import MapSelect from "./MapSelect.vue";
+import { FeatureCollection } from "geojson";
 
 // TODO: Add proj4 for the rulers
 // proj4.defs(
@@ -87,7 +96,6 @@ import { boundingExtent } from "ol/extent";
 // olProj4.register(proj4);
 
 const { activePointLayer, mapCenter } = useMapContext();
-
 const showRulerSubmenu = ref(false);
 const showPolygonSubmenu = ref(false);
 
@@ -197,10 +205,41 @@ const clustersLayer = new VectorLayer({
 	},
 });
 
+const selectedRoad = ref();
+const roads = [
+	{ name: "Маршрут передвижения №1", help_road_nr: 1 },
+	{ name: "Маршрут передвижения №2", help_road_nr: 2 },
+	{ name: "Маршрут передвижения №3", help_road_nr: 3 },
+	{ name: "Маршрут передвижения №4", help_road_nr: 4 },
+	{ name: "Маршрут передвижения №5", help_road_nr: 5 },
+	{ name: "Маршрут передвижения №6", help_road_nr: 6 },
+	{ name: "Маршрут передвижения №7", help_road_nr: 7 },
+];
+const roadFeatureCollections = ref<FeatureCollection[]>([]);
 const roadsSource = new VectorSource();
 const roadsLayer = new VectorLayer({
 	source: roadsSource,
 	style: new Style({ stroke: new Stroke({ color: "green", width: 2 }) }),
+});
+
+watch(selectedRoad, (selected) => {
+	const feature = roadFeatureCollections.value.find((fc) => {
+		const [f] = fc.features;
+		return f.properties?.help_road_nr === selected.help_road_nr;
+	});
+	roadsSource.clear();
+	roadsSource.addFeatures(new GeoJSON().readFeatures(feature));
+});
+
+onMounted(async () => {
+	const response = await fetch("/help_roads_3857.geojson");
+	const json = await response.json();
+
+	// Split GeoJSON FeatureCollection into multiple FeatureCollection
+	roadFeatureCollections.value = json.features.map((f: any) => ({
+		...json,
+		features: [f],
+	}));
 });
 
 onMounted(async () => {
@@ -215,12 +254,6 @@ onMounted(async () => {
 	});
 
 	poiSource.addFeatures(features);
-});
-
-onMounted(async () => {
-	const response = await fetch("/help_roads_3857.geojson");
-	const json = await response.json();
-	roadsSource.addFeatures(new GeoJSON().readFeatures(json));
 });
 
 onMounted(() => {
@@ -262,7 +295,9 @@ onMounted(() => {
 		if (features.length < 2) return;
 		const points = features.map((r) => r.getGeometry()?.getCoordinates());
 		const extent = boundingExtent(points as number[][]);
-		olMap.getView().fit(extent, { duration: 1000, padding: [50, 50, 50, 50] });
+		olMap
+			.getView()
+			.fit(extent, { duration: 1000, padding: [100, 100, 100, 100] });
 	});
 });
 
